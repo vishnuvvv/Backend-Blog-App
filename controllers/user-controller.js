@@ -21,7 +21,7 @@ export const signUp = async (req, res, next) => {
   try {
     existingUser = await User.findOne({ email });
   } catch (err) {
-    console.log(err);    
+    console.log(err);
   }
   if (existingUser) {
     return res.status(400).json({ message: "User already exists !!" });
@@ -31,7 +31,7 @@ export const signUp = async (req, res, next) => {
     name,
     email,
     password: hashedPassword,
-    blogs: []
+    blogs: [],
   });
 
   try {
@@ -42,7 +42,7 @@ export const signUp = async (req, res, next) => {
   return res.status(201).json({ user });
 };
 
-export const signIn = async(req, res, next) => {
+export const signIn = async (req, res, next) => {
   const { email, password } = req.body;
   let existingUser;
   try {
@@ -65,5 +65,7 @@ export const signIn = async(req, res, next) => {
     return res.status(400).json({ message: "Incorrect Password" });
   }
 
-  return res.status(200).json({ message: "Logged in successfully!!!" });
+  return res
+    .status(200)
+    .json({ message: "Logged in successfully!!!", user: existingUser });
 };
